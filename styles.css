@@ -1,0 +1,43 @@
+:root{
+  --bg1: #ffdde1;
+  --bg2: #ee9ca7;
+  --card: rgba(255,255,255,0.9);
+  --accent: #ff6b81;
+  --muted: #6b6b6b;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter,system-ui,Arial,Helvetica,sans-serif;background:linear-gradient(135deg,var(--bg1),var(--bg2));}
+.stage{min-height:100vh;display:grid;place-items:center;padding:40px}
+.card{width:min(720px,92%);background:var(--card);border-radius:18px;padding:36px 40px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,0.12);position:relative;overflow:hidden}
+.headline{font-family:'Great Vibes',cursive;font-size:44px;margin:0 0 8px;color:var(--accent);letter-spacing:0.6px}
+.message{font-size:20px;margin:0 0 18px;color:#333;line-height:1.5;font-weight:600}
+.small-note{font-size:13px;color:var(--muted);margin-top:14px}
+.controls{display:flex;gap:12px;justify-content:center;margin-top:6px}
+.btn{background:transparent;border:2px solid var(--accent);padding:8px 14px;border-radius:999px;font-weight:600;cursor:pointer;transition:all .18s ease}
+.btn:hover{transform:translateY(-3px);box-shadow:0 6px 18px rgba(0,0,0,0.08)}
+
+/* Hearts container sits on top of background but behind card content */
+#hearts{position:fixed;left:0;top:0;right:0;bottom:0;pointer-events:none;overflow:hidden;z-index:2}
+.card{z-index:3}
+
+/* single heart shape used by JS (size varies) */
+.heart{
+  position:absolute;left:50%;top:50%;width:40px;height:40px;transform:translate(-50%,-50%) scale(0.6);
+  transform-origin:center center;
+  opacity:0;pointer-events:none;filter:drop-shadow(0 6px 12px rgba(0,0,0,0.08));
+}
+.heart::before,.heart::after{content:'';position:absolute;left:50%;top:50%;width:inherit;height:inherit;border-radius:50%;background:var(--accent)}
+.heart::before{transform:translate(-50%,-60%)}
+.heart::after{transform:translate(-60%,-50%)}
+.heart .bottom{position:absolute;left:50%;top:50%;width:56%;height:56%;background:var(--accent);transform:translate(-50%,-10%) rotate(45deg);border-radius:8px}
+
+/* Floating animation class applied by JS */
+.floatUp{animation:floatUp linear forwards}
+@keyframes floatUp{
+  0%{transform:translate(var(--x,0px),var(--y,0px)) scale(var(--s,0.6));opacity:0}
+  10%{opacity:1}
+  100%{transform:translate(calc(var(--x,0px) + var(--drift,0px)), -120vh) scale(var(--s,0.6));opacity:0}
+}
+
+/* responsive tweaks */
+@media (max-width:420px){.headline{font-size:34px}.message{font-size:18px}}
